@@ -9,12 +9,12 @@ def browser_init(context):
     # """
     # :param context: Behave context
     # """
-    # driver_path = ChromeDriverManager().install()
-    # service = Service(driver_path)
-    # context.driver = webdriver.Chrome(service=service)
-    # context.driver.maximize_window()
+    driver_path = ChromeDriverManager().install()
+    service = Service(driver_path)
+    context.driver = webdriver.Chrome(service=service)
+    context.driver.maximize_window()
 
-    context.driver = webdriver.Firefox(executable_path='/Users/stephenokonkwo/Desktop/python-selenium-automation/geckodriverr')
+    # context.driver = webdriver.Firefox(executable_path='/Users/stephenokonkwo/Desktop/python-selenium-automation/geckodriverr')
     # context.driver = webdriver.Safari()
 
     #### HEADLESS MODE ####
