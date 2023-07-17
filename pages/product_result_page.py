@@ -4,5 +4,12 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support.ui import Select
 
 
-class SearchResultsPage(Page):
-    pass
+class ProductResultsPage(Page):
+    SPF_RESULT = (By.XPATH, '//a[@href= "/products/mineral-sunscreen?_pos=1&_psq=SPF&_ss=e&_v=1.0"]')
+    SPF_VERIFICATION = (By.CSS_SELECTOR, 'div.product__title')
+
+    def click_product(self):
+        self.click(*self.SPF_RESULT)
+
+    def verify_product_result(self, expected_result):
+        self.verify_partial_text(expected_result, *self.SPF_VERIFICATION)

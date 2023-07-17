@@ -5,4 +5,5 @@ Feature: cureskin search result test cases
     Given Open Main page
     When From Header Page, click "Search"
     And Search for SPF
-    Then Verify the results have spf
+    And Click on product
+    Then Verify the results have SPF
