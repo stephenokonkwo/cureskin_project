@@ -1,3 +1,5 @@
+from time import sleep
+
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.by import By
 from pages.base_page import Page
@@ -10,4 +12,4 @@ class SearchResultsPage(Page):
 
     def search_for_product(self, search_query):
         self.input_text(search_query, *self.SEARCH_FEILD)
-
+        # sleep(.5)

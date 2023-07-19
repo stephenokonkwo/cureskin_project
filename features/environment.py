@@ -9,12 +9,16 @@ def browser_init(context):
     # """
     # :param context: Behave context
     # """
+
+    #### Chrome-Cross Browser- Default Browser ####
     driver_path = ChromeDriverManager().install()
     service = Service(driver_path)
     context.driver = webdriver.Chrome(service=service)
-    context.driver.maximize_window()
 
-    # context.driver = webdriver.Firefox(executable_path='/Users/stephenokonkwo/Desktop/python-selenium-automation/geckodriverr')
+    #### Firefox-Cross Browser ####
+    # context.driver = webdriver.Firefox(executable_path='/Users/stephenokonkwo/Desktop/cureskin_project/geckodriver')
+
+    #### Safari-Cross Browser ####
     # context.driver = webdriver.Safari()
 
     #### HEADLESS MODE ####
@@ -22,8 +26,9 @@ def browser_init(context):
     # service = Service(driver_path)
     # options = webdriver.ChromeOptions()
     # options.add_argument('--headless')
+    # options.add_argument("--window-size=1920,1080")
     # context.driver = webdriver.Chrome(
-    #     chrome_options=options,
+    #     options=options,
     #     service=service
     # )
 
@@ -39,7 +44,7 @@ def browser_init(context):
     # url = f'http://{bs_user}:{bs_key}@hub-cloud.browserstack.com/wd/hub'
     # context.driver = webdriver.Remote(url, desired_capabilities=desired_cap)
 
-    # context.driver.maximize_window()
+    context.driver.maximize_window()
     context.driver.implicitly_wait(4)
     context.driver.wait = WebDriverWait(context.driver, 10)
     context.app = Application(context.driver)

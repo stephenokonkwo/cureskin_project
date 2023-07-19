@@ -1,3 +1,5 @@
+from time import sleep
+
 from selenium.webdriver.common.by import By
 from pages.base_page import Page
 from selenium.webdriver.common.action_chains import ActionChains
@@ -9,7 +11,9 @@ class ProductResultsPage(Page):
     SPF_VERIFICATION = (By.CSS_SELECTOR, 'div.product__title')
 
     def click_product(self):
-        self.click(*self.SPF_RESULT)
+        self.wait_for_element_click(*self.SPF_RESULT)
+        # sleep(.5)
 
     def verify_product_result(self, expected_result):
         self.verify_partial_text(expected_result, *self.SPF_VERIFICATION)
+        # sleep(.5)
