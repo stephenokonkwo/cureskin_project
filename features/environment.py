@@ -5,20 +5,20 @@ from selenium.webdriver.support.wait import WebDriverWait
 from app.application import Application
 
 
-def browser_init(context):
+def browser_init(context, scenario):
     # """
     # :param context: Behave context
     # """
 
-    #### Chrome-Cross Browser- Default Browser ####
-    driver_path = ChromeDriverManager().install()
-    service = Service(driver_path)
-    context.driver = webdriver.Chrome(service=service)
+    #### CHROME-CROSS BROWSER- DEFAULT BROWSER ####
+    # driver_path = ChromeDriverManager().install()
+    # service = Service(driver_path)
+    # context.driver = webdriver.Chrome(service=service)
 
-    #### Firefox-Cross Browser ####
+    #### FIREFOX-CROSS BROWSER ####
     # context.driver = webdriver.Firefox(executable_path='/Users/stephenokonkwo/Desktop/cureskin_project/geckodriver')
 
-    #### Safari-Cross Browser ####
+    #### SAFARI-CROSS BROWSER ####
     # context.driver = webdriver.Safari()
 
     #### HEADLESS MODE ####
@@ -33,16 +33,56 @@ def browser_init(context):
     # )
 
     #### BROWSERSTACK ####
+    # LANA'S CODE EXAMPLE
     # desired_cap = {
-    #     'browser': 'Firefox',
-    #     'os_version': '11',
+    #     'browser': 'Chrome',
     #     'os': 'Windows',
-    #     'name': test_name
+    #     'os_version': '11',
+    #     'name': scenario.name
     # }
-    # bs_user = ''
-    # bs_key = ''
-    # url = f'http://{bs_user}:{bs_key}@hub-cloud.browserstack.com/wd/hub'
-    # context.driver = webdriver.Remote(url, desired_capabilities=desired_cap)
+
+    # DEFAULT: TESTS RUNNING: CHROME 115.0 VIA MAC(VENTURA)
+    desired_cap = {
+        'bstack:options': {
+            "os": "OS X",
+            "osVersion": "Ventura",
+            "browserVersion": "latest",
+            "local": "false",
+            "seleniumVersion": "3.14.0",
+        },
+        "browserName": "Chrome",
+    }
+
+    # TESTS RUNNING: CHROME 115.0 VIA WINDOWS 11
+    # desired_cap = {
+    #     'bstack:options': {
+    #         "os": "Windows",
+    #         "osVersion": "11",
+    #         "browserVersion": "latest-beta",
+    #         "local": "false",
+    #         "seleniumVersion": "3.14.0",
+    #     },
+    #     "browserName": "Chrome",
+    # }
+
+    # TESTS RUNNING: FIREFOX 115.0 VIA WINDOWS 11
+    # desired_cap = {
+    #     'bstack:options': {
+    #         "os": "Windows",
+    #         "osVersion": "11",
+    #         "browserVersion": "latest",
+    #         "local": "false",
+    #         "seleniumVersion": "3.10.0",
+    #     },
+    #     "browserName": "Firefox",
+    # }
+
+    bs_user = 'stephenokonkwo_Zihb2C'
+    bs_key = 'HEucNHsx1pT1wqHyfTU7'
+    url = f'http://{bs_user}:{bs_key}@hub-cloud.browserstack.com/wd/hub'
+    context.driver = webdriver.Remote(url, desired_capabilities=desired_cap)
+    context.driver.execute_script(
+        'browserstack_executor:{"action":"setSessionName", "arguments":{"name": " ' + scenario.name + ' " }}')
 
     context.driver.maximize_window()
     context.driver.implicitly_wait(4)
@@ -52,7 +92,7 @@ def browser_init(context):
 
 def before_scenario(context, scenario):
     print('\nStarted scenario: ', scenario.name)
-    browser_init(context)
+    browser_init(context, scenario)
 
 
 def before_step(context, step):
@@ -62,6 +102,9 @@ def before_step(context, step):
 def after_step(context, step):
     if step.status == 'failed':
         print('\nStep failed: ', step)
+        context.driver.execute_script(
+            'browserstack_executor: {"action": "setSessionStatus", "arguments": {"status":"failed", "reason": "Step '
+            'failed"}}')
 
 
 def after_scenario(context, feature):
