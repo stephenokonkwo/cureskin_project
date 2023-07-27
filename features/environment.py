@@ -1,8 +1,13 @@
+import allure
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.support.wait import WebDriverWait
 from app.application import Application
+
+
+# Allure command:
+# python3 -m behave -f allure_behave.formatter:AllureFormatter -o test_results/feature/test/cureskin_search_results.feature
 
 
 def browser_init(context, scenario):
@@ -11,9 +16,16 @@ def browser_init(context, scenario):
     # """
 
     #### CHROME-CROSS BROWSER- DEFAULT BROWSER ####
+
+    ## regular way
     # driver_path = ChromeDriverManager().install()
-    # service = Service(driver_path)
-    # context.driver = webdriver.Chrome(service=service)
+    # service = Service(executable_path=driver_path)
+
+    # run on chrome for testing
+    service = Service(executable_path='/Users/stephenokonkwo/Desktop/cureskin_project/chromedriver')
+
+
+    context.driver = webdriver.Chrome(service=service)
 
     #### FIREFOX-CROSS BROWSER ####
     # context.driver = webdriver.Firefox(executable_path='/Users/stephenokonkwo/Desktop/cureskin_project/geckodriver')
@@ -42,16 +54,16 @@ def browser_init(context, scenario):
     # }
 
     # DEFAULT: TESTS RUNNING: CHROME 115.0 VIA MAC(VENTURA)
-    desired_cap = {
-        'bstack:options': {
-            "os": "OS X",
-            "osVersion": "Ventura",
-            "browserVersion": "latest",
-            "local": "false",
-            "seleniumVersion": "3.14.0",
-        },
-        "browserName": "Chrome",
-    }
+    # desired_cap = {
+    #     'bstack:options': {
+    #         "os": "OS X",
+    #         "osVersion": "Ventura",
+    #         "browserVersion": "latest",
+    #         "local": "false",
+    #         "seleniumVersion": "3.14.0",
+    #     },
+    #     "browserName": "Chrome",
+    # }
 
     # TESTS RUNNING: CHROME 115.0 VIA WINDOWS 11
     # desired_cap = {
@@ -77,12 +89,12 @@ def browser_init(context, scenario):
     #     "browserName": "Firefox",
     # }
 
-    bs_user = 'stephenokonkwo_Zihb2C'
-    bs_key = 'HEucNHsx1pT1wqHyfTU7'
-    url = f'http://{bs_user}:{bs_key}@hub-cloud.browserstack.com/wd/hub'
-    context.driver = webdriver.Remote(url, desired_capabilities=desired_cap)
-    context.driver.execute_script(
-        'browserstack_executor:{"action":"setSessionName", "arguments":{"name": " ' + scenario.name + ' " }}')
+    # bs_user = 'stephenokonkwo_Zihb2C'
+    # bs_key = 'HEucNHsx1pT1wqHyfTU7'
+    # url = f'http://{bs_user}:{bs_key}@hub-cloud.browserstack.com/wd/hub'
+    # context.driver = webdriver.Remote(url, desired_capabilities=desired_cap)
+    # context.driver.execute_script(
+    #     'browserstack_executor:{"action":"setSessionName", "arguments":{"name": " ' + scenario.name + ' " }}')
 
     context.driver.maximize_window()
     context.driver.implicitly_wait(4)
