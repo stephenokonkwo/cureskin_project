@@ -10,3 +10,4 @@ class MainPage(Page):
         self.open_url('https://shop.cureskin.com/')
         self.wait_for_element_click(*self.POP_UP_BTN)
         # sleep(.5)
+

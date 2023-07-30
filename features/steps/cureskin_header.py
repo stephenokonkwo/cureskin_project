@@ -10,3 +10,9 @@ def click_search(context):
     context.app.header.click_search()
 
 
+@when('Tap Hamburger BTN')
+def select_menu_btn(context):
+    context.app.header.select_menu_btn()
+
+
+

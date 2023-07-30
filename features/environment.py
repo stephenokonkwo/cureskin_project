@@ -22,10 +22,18 @@ def browser_init(context, scenario):
     # service = Service(executable_path=driver_path)
 
     # run on chrome for testing
-    service = Service(executable_path='/Users/stephenokonkwo/Desktop/cureskin_project/chromedriver')
+    # service = Service(executable_path='/Users/stephenokonkwo/Desktop/cureskin_project/chromedriver')
 
+    # context.driver = webdriver.Chrome(service=service)
 
-    context.driver = webdriver.Chrome(service=service)
+    #### MOBILE EMULATOR ####
+    mobile_emulation = {"deviceName": "iPhone 12 Pro"}
+
+    chrome_options = webdriver.ChromeOptions()
+
+    chrome_options.add_experimental_option("mobileEmulation", mobile_emulation)
+
+    context.driver = webdriver.Chrome(options=chrome_options)
 
     #### FIREFOX-CROSS BROWSER ####
     # context.driver = webdriver.Firefox(executable_path='/Users/stephenokonkwo/Desktop/cureskin_project/geckodriver')
